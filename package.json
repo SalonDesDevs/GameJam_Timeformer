@@ -1,0 +1,43 @@
+{
+  "name": "timeformer",
+  "version": "1.0.0",
+  "description": "SDD GameJam Game",
+  "main": "game.js",
+  "scripts": {
+    "build": "npm run rollup && npm run helpers",
+    "rollup": "rollup -c",
+    "watch": "rollup -c -w",
+    "helpers": "babel-external-helpers -t var > dist/helpers.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SalonDesDevs/GameJam_Timeformer.git"
+  },
+  "author": "Fliife & DeltaEvo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SalonDesDevs/GameJam_Timeformer/issues"
+  },
+  "homepage": "https://github.com/SalonDesDevs/GameJam_Timeformer#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-static-fs": "^1.1.0",
+    "babel-plugin-version-inline": "^1.0.0",
+    "babel-preset-env": "^1.4.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-alias": "^1.3.1",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-browserify-transform": "^0.1.0",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-builtins": "^2.1.0",
+    "rollup-plugin-node-globals": "^1.1.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-uglify": "^1.0.2",
+    "rollup-watch": "^3.2.2"
+  },
+  "dependencies": {
+    "pixi.js": "pixijs/pixi.js"
+  }
+}
