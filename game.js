@@ -1,6 +1,8 @@
 import {
     Application,
     Graphics,
+    TextStyle,
+    Text,
     Sprite,
     loader as PixiLoader
 } from 'pixi.js';
@@ -33,7 +35,8 @@ const maps = [{
             y: 550,
             w: 600,
             h: 100
-        }, {
+        },
+        {
             x: 250,
             y: 250,
             w: 100,
@@ -115,6 +118,91 @@ const maps = [{
     end: {
         x: 25,
         y: 350
+    }
+}, {
+    platform: [
+        // Left wall
+        {
+            x: -51,
+            y: -1,
+            h: 600,
+            w: 50
+        },
+        // Right wall
+        {
+            x: 601,
+            y: -1,
+            h: 600,
+            w: 50
+        },
+        {
+            x: 0,
+            y: 600,
+            w: 600,
+            h: 100
+        },
+        {
+            x: 0,
+            y: 550,
+            h: 50,
+            w: 450
+        },
+        {
+            x: 0,
+            y: 500,
+            h: 50,
+            w: 400
+        },
+        {
+            x: 0,
+            y: 450,
+            h: 50,
+            w: 350
+        },
+        {
+            x: 0,
+            y: 400,
+            h: 50,
+            w: 300
+        },
+        {
+            x: 0,
+            y: 350,
+            h: 50,
+            w: 250
+        },
+        {
+            x: 0,
+            y: 300,
+            h: 50,
+            w: 200
+        },
+        {
+            x: 0,
+            y: 250,
+            h: 50,
+            w: 150
+        },
+        {
+            x: 0,
+            y: 200,
+            h: 50,
+            w: 100
+        },
+        {
+            x: 0,
+            y: 150,
+            h: 50,
+            w: 50
+        },
+    ],
+    start: {
+        x: 575,
+        y: 25
+    },
+    end: {
+        x: 25,
+        y: 25
     }
 }];
 
@@ -217,6 +305,7 @@ let previousPlayers = [];
 let previousPlayersSprites = [];
 let frameCounter = 0;
 let hasWon = false;
+let hasEnded = false;
 let winSprite = undefined;
 let maxFrameCount = 0;
 
@@ -247,15 +336,19 @@ document.addEventListener('keyup', event => {
 
 
 app.ticker.add(function(delta) {
-    if (hasWon) {
+    if (hasWon && !hasEnded) {
         winSprite.scale.x = winSprite.scale.y = Math.min(Math.max(0.05, winSprite.scale.x * 1.10), 1);
-        if(winSprite.scale.x === 1) {
-            hasWon = false;
+        if (winSprite.scale.x === 1) {
             currentMap++;
+            if (maps[currentMap] === undefined) {
+                theEnd();
+                return;
+            }
             setup(maps[currentMap]);
         }
         return;
     }
+    if (hasEnded) return;
     let oldCoordinates = {
         x: player.x,
         y: player.y
@@ -385,4 +478,36 @@ const addCircle = _ => {
     winSprite.y = maps[currentMap].end.y;
     winSprite.scale.x = winSprite.scale.y = 0;
     app.stage.addChild(winSprite);
+}
+
+const theEnd = _ => {
+    hasEnded = true;
+    var richText = new Text('Timeformer', new TextStyle({
+        fontFamily: 'Montserrat',
+        fontSize: 36,
+        fontWeight: 'bold',
+        fill: ['#1c1c1c', '#1c1c1c'],
+    }));
+    richText.x = 30;
+    richText.y = 180;
+    var authors = new Text('DeltaEvo & FliiFe', new TextStyle({
+        fontFamily: 'Montserrat',
+        fontSize: 26,
+        fontWeight: 'bold',
+        fill: ['#1c1c1c', '#1c1c1c'],
+    }));
+    authors.x = 30;
+    authors.y = 240;
+    var jam = new Text('SDD Jam, 22-23/04/2017', new TextStyle({
+        fontFamily: 'Montserrat',
+        fontSize: 20,
+        fontWeight: 'bold',
+        fill: ['#1c1c1c', '#1c1c1c'],
+    }));
+    jam.x = 30;
+    jam.y = 290;
+
+    app.stage.addChild(richText);
+    app.stage.addChild(authors);
+    app.stage.addChild(jam);
 }
